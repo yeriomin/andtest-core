@@ -38,9 +38,13 @@ public class Test extends JSONObject {
         return count;
     }
 
-    private Test(JSONObject object) throws JSONException {
-        super(object);
+    public Test(JSONObject object) throws JSONException {
+        super();
 
+        fill(object);
+    }
+
+    protected void fill(JSONObject object) throws JSONException {
         this.questions = new ArrayList<>();
         JSONArray questions = object.getJSONArray(JSON_PROPERTY_QUESTIONS);
         for (int i = 0; i < questions.length(); i++) {
@@ -52,9 +56,5 @@ public class Test extends JSONObject {
         if (object.has(JSON_PROPERTY_DESCRIPTION)) {
             this.description = object.getString(JSON_PROPERTY_DESCRIPTION);
         }
-    }
-    
-    static public Test of(String content) throws JSONException {
-        return new Test(new JSONObject(content));
     }
 }

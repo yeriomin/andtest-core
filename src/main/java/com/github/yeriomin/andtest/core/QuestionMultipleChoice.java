@@ -23,7 +23,7 @@ public class QuestionMultipleChoice extends Question {
         return correct;
     }
 
-    protected QuestionMultipleChoice(JSONObject jsonQuestion) throws JSONException {
+    public QuestionMultipleChoice(JSONObject jsonQuestion) throws JSONException {
         super(jsonQuestion);
 
         this.setAnswer(new HashSet<Integer>());

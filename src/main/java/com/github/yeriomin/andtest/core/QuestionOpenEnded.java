@@ -13,7 +13,7 @@ public class QuestionOpenEnded extends Question {
         return correct;
     }
 
-    protected QuestionOpenEnded(JSONObject jsonQuestion) throws JSONException {
+    public QuestionOpenEnded(JSONObject jsonQuestion) throws JSONException {
         super(jsonQuestion);
 
         this.setAnswer(new String());

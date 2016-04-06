@@ -17,8 +17,8 @@ abstract public class Question extends JSONObject {
     private String explanation;
     private Object answer;
 
-    protected Question(JSONObject jsonQuestion) throws JSONException {
-        super(jsonQuestion);
+    public Question(JSONObject jsonQuestion) throws JSONException {
+        super();
 
         this.question = jsonQuestion.getString(JSON_PROPERTY_QUESTION);
         this.explanation = jsonQuestion.getString(JSON_PROPERTY_EXPLANATION);
