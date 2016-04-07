@@ -3,10 +3,11 @@ package com.github.yeriomin.andtest.core;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONString;
 
 import java.util.ArrayList;
 
-public class Test extends JSONObject {
+public class Test implements Jsonable, JSONString {
     
     private static final String JSON_PROPERTY_QUESTIONS = "questions";
     private static final String JSON_PROPERTY_TIMELIMIT = "timeLimit";
@@ -15,6 +16,18 @@ public class Test extends JSONObject {
     private String description = "";
     private long timeLimit;
     private ArrayList<Question> questions;
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setTimeLimit(long timeLimit) {
+        this.timeLimit = timeLimit;
+    }
+
+    public void setQuestions(ArrayList<Question> questions) {
+        this.questions = questions;
+    }
 
     public long getTimeLimit() {
         return timeLimit;
@@ -38,8 +51,14 @@ public class Test extends JSONObject {
         return count;
     }
 
-    public Test(JSONObject object) throws JSONException {
+    public Test() {
         super();
+
+        this.questions = new ArrayList<>();
+    }
+
+    public Test(JSONObject object) throws JSONException {
+        this();
 
         fill(object);
     }
@@ -56,5 +75,25 @@ public class Test extends JSONObject {
         if (object.has(JSON_PROPERTY_DESCRIPTION)) {
             this.description = object.getString(JSON_PROPERTY_DESCRIPTION);
         }
+    }
+
+    public String toJSONString() {
+        return this.toJsonObject().toString(4);
+    }
+
+    public JSONObject toJsonObject () {
+        JSONObject object = new JSONObject();
+        if (null != this.description && this.description.length() > 0) {
+            object.put(JSON_PROPERTY_DESCRIPTION, this.description);
+        }
+        if (this.timeLimit > 0) {
+            object.put(JSON_PROPERTY_TIMELIMIT, this.timeLimit);
+        }
+        JSONArray questions = new JSONArray();
+        for (Question question: this.getQuestions()) {
+            questions.put(question.toJsonObject());
+        }
+        object.put(JSON_PROPERTY_QUESTIONS, questions);
+        return object;
     }
 }

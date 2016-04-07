@@ -2,8 +2,9 @@ package com.github.yeriomin.andtest.core;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONString;
 
-abstract public class Question extends JSONObject {
+abstract public class Question implements Jsonable, JSONString {
 
     public static final String TYPE_MC = "multipleChoice";
     public static final String TYPE_OE = "openEnded";
@@ -15,11 +16,12 @@ abstract public class Question extends JSONObject {
     protected String type;
     private String question;
     private String explanation;
-    private Object answer;
+
+    public Question() {
+
+    }
 
     public Question(JSONObject jsonQuestion) throws JSONException {
-        super();
-
         this.question = jsonQuestion.getString(JSON_PROPERTY_QUESTION);
         this.explanation = jsonQuestion.getString(JSON_PROPERTY_EXPLANATION);
     }
@@ -47,12 +49,24 @@ abstract public class Question extends JSONObject {
         return explanation;
     }
 
-    public Object getAnswer() {
-        return answer;
+    public void setQuestion(String question) {
+        this.question = question;
     }
 
-    public void setAnswer(Object answer) {
-        this.answer = answer;
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
+    }
+
+    public String toJSONString() {
+        return this.toJsonObject().toString(4);
+    }
+
+    public JSONObject toJsonObject () {
+        JSONObject object = new JSONObject();
+        object.put(JSON_PROPERTY_TYPE, this.type);
+        object.put(JSON_PROPERTY_QUESTION, this.question);
+        object.put(JSON_PROPERTY_EXPLANATION, this.explanation);
+        return object;
     }
 
     abstract public boolean isCorrect();

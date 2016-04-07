@@ -14,6 +14,7 @@ public class QuestionMultipleChoice extends Question {
 
     private ArrayList<String> choices;
     private HashSet<Integer> correct;
+    private HashSet<Integer> answer;
 
     public ArrayList<String> getChoices() {
         return choices;
@@ -21,6 +22,29 @@ public class QuestionMultipleChoice extends Question {
 
     public HashSet<Integer> getCorrect() {
         return correct;
+    }
+
+    public HashSet<Integer> getAnswer() {
+        return answer;
+    }
+
+    public void setChoices(ArrayList<String> choices) {
+        this.choices = choices;
+    }
+
+    public void setCorrect(HashSet<Integer> correct) {
+        this.correct = correct;
+    }
+
+    public void setAnswer(HashSet<Integer> answer) {
+        this.answer = answer;
+    }
+
+    public QuestionMultipleChoice() {
+        super();
+
+        this.setAnswer(new HashSet<Integer>());
+        this.type = Question.TYPE_MC;
     }
 
     public QuestionMultipleChoice(JSONObject jsonQuestion) throws JSONException {
@@ -40,12 +64,19 @@ public class QuestionMultipleChoice extends Question {
         }
     }
 
+    public JSONObject toJsonObject () {
+        JSONObject object = super.toJsonObject();
+        object.put(JSON_PROPERTY_CHOICES, this.choices);
+        object.put(JSON_PROPERTY_CORRECT, this.correct);
+        return object;
+    }
+
     public boolean isCorrect() {
         return this.correct.equals(this.getAnswer());
     }
 
     public boolean hasAnswer() {
-        return null != this.getAnswer() && ((HashSet<Integer>) this.getAnswer()).size() > 0;
+        return null != this.getAnswer() && this.getAnswer().size() > 0;
     }
 
 }
