@@ -3,11 +3,10 @@ package com.github.yeriomin.andtest.core;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONString;
 
 import java.util.ArrayList;
 
-public class Test implements Jsonable, JSONString {
+public class Test implements Jsonable {
     
     private static final String JSON_PROPERTY_QUESTIONS = "questions";
     private static final String JSON_PROPERTY_TIMELIMIT = "timeLimit";
@@ -78,10 +77,10 @@ public class Test implements Jsonable, JSONString {
     }
 
     public String toJSONString() {
-        return this.toJsonObject().toString(4);
+        return this.toJSONObject().toString(4);
     }
 
-    public JSONObject toJsonObject () {
+    public JSONObject toJSONObject () {
         JSONObject object = new JSONObject();
         if (null != this.description && this.description.length() > 0) {
             object.put(JSON_PROPERTY_DESCRIPTION, this.description);
@@ -91,7 +90,7 @@ public class Test implements Jsonable, JSONString {
         }
         JSONArray questions = new JSONArray();
         for (Question question: this.getQuestions()) {
-            questions.put(question.toJsonObject());
+            questions.put(question.toJSONObject());
         }
         object.put(JSON_PROPERTY_QUESTIONS, questions);
         return object;

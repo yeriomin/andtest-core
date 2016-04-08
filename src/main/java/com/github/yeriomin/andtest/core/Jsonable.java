@@ -3,5 +3,6 @@ package com.github.yeriomin.andtest.core;
 import org.json.JSONObject;
 
 public interface Jsonable {
-    JSONObject toJsonObject();
+    JSONObject toJSONObject();
+    String toJSONString();
 }

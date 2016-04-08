@@ -66,7 +66,7 @@ public class QuestionMultipleChoiceTest extends TestCase {
             correct.add(0);
             question.setCorrect(correct);
 
-            JSONObject object = question.toJsonObject();
+            JSONObject object = question.toJSONObject();
 
             assertEquals("multipleChoice", object.getString("type"));
             assertTrue(object.has("choices"));

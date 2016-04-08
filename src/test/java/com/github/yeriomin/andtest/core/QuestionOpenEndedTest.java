@@ -46,7 +46,7 @@ public class QuestionOpenEndedTest extends TestCase {
             com.github.yeriomin.andtest.core.QuestionOpenEnded question = new com.github.yeriomin.andtest.core.QuestionOpenEnded();
             question.setCorrect("Jack");
 
-            JSONObject object = question.toJsonObject();
+            JSONObject object = question.toJSONObject();
 
             assertEquals("openEnded", object.getString("type"));
             assertEquals("Jack", object.getString("correct"));

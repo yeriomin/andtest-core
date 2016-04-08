@@ -2,9 +2,8 @@ package com.github.yeriomin.andtest.core;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONString;
 
-abstract public class Question implements Jsonable, JSONString {
+abstract public class Question implements Jsonable {
 
     public static final String TYPE_MC = "multipleChoice";
     public static final String TYPE_OE = "openEnded";
@@ -58,10 +57,10 @@ abstract public class Question implements Jsonable, JSONString {
     }
 
     public String toJSONString() {
-        return this.toJsonObject().toString(4);
+        return this.toJSONObject().toString(4);
     }
 
-    public JSONObject toJsonObject () {
+    public JSONObject toJSONObject() {
         JSONObject object = new JSONObject();
         object.put(JSON_PROPERTY_TYPE, this.type);
         object.put(JSON_PROPERTY_QUESTION, this.question);

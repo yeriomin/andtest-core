@@ -50,7 +50,7 @@ public class TestTest extends TestCase {
         questions.add(new QuestionMultipleChoice());
         test.setQuestions(questions);
 
-        JSONObject object = test.toJsonObject();
+        JSONObject object = test.toJSONObject();
         assertTrue(object.has("questions"));
         assertEquals(1, object.getJSONArray("questions").length());
         assertEquals(600, object.getInt("timeLimit"));

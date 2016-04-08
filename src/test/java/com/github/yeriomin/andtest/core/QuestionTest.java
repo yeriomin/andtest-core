@@ -48,7 +48,7 @@ public class QuestionTest extends TestCase {
             question.setQuestion("What is my name?");
             question.setExplanation("My mum named me like that.");
 
-            JSONObject object = question.toJsonObject();
+            JSONObject object = question.toJSONObject();
 
             assertEquals("openEnded", object.getString("type"));
             assertEquals("What is my name?", object.getString("question"));

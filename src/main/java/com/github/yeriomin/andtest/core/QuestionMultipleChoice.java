@@ -64,8 +64,8 @@ public class QuestionMultipleChoice extends Question {
         }
     }
 
-    public JSONObject toJsonObject () {
-        JSONObject object = super.toJsonObject();
+    public JSONObject toJSONObject () {
+        JSONObject object = super.toJSONObject();
         object.put(JSON_PROPERTY_CHOICES, this.choices);
         object.put(JSON_PROPERTY_CORRECT, this.correct);
         return object;

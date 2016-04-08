@@ -41,8 +41,8 @@ public class QuestionOpenEnded extends Question {
         this.correct = jsonQuestion.getString(JSON_PROPERTY_CORRECT);
     }
 
-    public JSONObject toJsonObject () {
-        JSONObject object = super.toJsonObject();
+    public JSONObject toJSONObject () {
+        JSONObject object = super.toJSONObject();
         object.put(JSON_PROPERTY_CORRECT, this.correct);
         return object;
     }
