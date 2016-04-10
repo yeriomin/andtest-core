@@ -6,9 +6,11 @@ import junit.framework.TestSuite;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 public class QuestionTest extends TestCase {
 
-    private final JSONObject question = new JSONObject();
+    private final HashMap<String, Object> question = new HashMap<>();
 
     public QuestionTest(String testName)
     {

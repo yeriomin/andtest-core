@@ -3,6 +3,9 @@ package com.github.yeriomin.andtest.core;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 abstract public class Question implements Jsonable {
 
     public static final String TYPE_MC = "multipleChoice";
@@ -20,17 +23,27 @@ abstract public class Question implements Jsonable {
 
     }
 
-    public Question(JSONObject jsonQuestion) throws JSONException {
-        this.question = jsonQuestion.getString(JSON_PROPERTY_QUESTION);
-        this.explanation = jsonQuestion.getString(JSON_PROPERTY_EXPLANATION);
+    public Question(Map map) throws JSONException {
+        if (!map.containsKey(JSON_PROPERTY_QUESTION)) {
+            throw new JSONException("question field missing");
+        }
+        this.question = (String) map.get(JSON_PROPERTY_QUESTION);
+        if (!map.containsKey(JSON_PROPERTY_EXPLANATION)) {
+            throw new JSONException("explanation field missing");
+        }
+        this.explanation = (String) map.get(JSON_PROPERTY_EXPLANATION);
     }
 
     public static Question of(JSONObject jsonQuestion) throws JSONException {
         final String type = jsonQuestion.getString(JSON_PROPERTY_TYPE);
+        HashMap<String, Object> map = new HashMap<>();
+        for (String key: jsonQuestion.keySet()) {
+            map.put(key, jsonQuestion.get(key));
+        }
         if (type.equals(TYPE_MC)) {
-            return new QuestionMultipleChoice(jsonQuestion);
+            return new QuestionMultipleChoice(map);
         } else if (type.equals(TYPE_OE)) {
-            return new QuestionOpenEnded(jsonQuestion);
+            return new QuestionOpenEnded(map);
         } else {
             throw new JSONException("Unknown type: " + type);
         }

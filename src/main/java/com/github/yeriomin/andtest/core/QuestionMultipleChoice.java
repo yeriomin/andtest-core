@@ -1,11 +1,11 @@
 package com.github.yeriomin.andtest.core;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 
 public class QuestionMultipleChoice extends Question {
 
@@ -47,20 +47,26 @@ public class QuestionMultipleChoice extends Question {
         this.type = Question.TYPE_MC;
     }
 
-    public QuestionMultipleChoice(JSONObject jsonQuestion) throws JSONException {
-        super(jsonQuestion);
+    public QuestionMultipleChoice(Map map) throws JSONException {
+        super(map);
 
         this.setAnswer(new HashSet<Integer>());
         this.type = Question.TYPE_MC;
-        JSONArray choices = jsonQuestion.getJSONArray(JSON_PROPERTY_CHOICES);
-        this.choices = new ArrayList<>();
-        for (int i = 0; i < choices.length(); i++){
-            this.choices.add(choices.getString(i));
+        if (!map.containsKey(JSON_PROPERTY_CHOICES)) {
+            throw new JSONException("choices field missing");
         }
-        JSONArray correct = jsonQuestion.getJSONArray(JSON_PROPERTY_CORRECT);
+        Iterable choices = (Iterable) map.get(JSON_PROPERTY_CHOICES);
+        this.choices = new ArrayList<>();
+        for (Object item: choices) {
+            this.choices.add((String) item);
+        }
+        if (!map.containsKey(JSON_PROPERTY_CORRECT)) {
+            throw new JSONException("correct field missing");
+        }
+        Iterable correct = (Iterable) map.get(JSON_PROPERTY_CORRECT);
         this.correct = new HashSet<>();
-        for (int i = 0; i < correct.length(); i++){
-            this.correct.add(correct.getInt(i));
+        for (Object item: correct) {
+            this.correct.add((Integer) item);
         }
     }
 

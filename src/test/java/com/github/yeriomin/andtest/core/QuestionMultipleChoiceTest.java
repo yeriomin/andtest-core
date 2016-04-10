@@ -8,11 +8,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class QuestionMultipleChoiceTest extends TestCase {
 
-    private final JSONObject question = new JSONObject();
+    private final HashMap<String, Object> question = new HashMap<>();
 
     public QuestionMultipleChoiceTest(String testName)
     {

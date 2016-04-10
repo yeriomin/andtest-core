@@ -5,6 +5,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Test implements Jsonable {
     
@@ -56,23 +58,36 @@ public class Test implements Jsonable {
         this.questions = new ArrayList<>();
     }
 
+    public Test(Map map) throws JSONException {
+        this();
+
+        fill(map);
+    }
+
     public Test(JSONObject object) throws JSONException {
         this();
 
-        fill(object);
+        HashMap<String, Object> map = new HashMap<>();
+        for (String key: object.keySet()) {
+            map.put(key, object.get(key));
+        }
+        fill(map);
     }
 
-    protected void fill(JSONObject object) throws JSONException {
+    protected void fill(Map map) throws JSONException {
         this.questions = new ArrayList<>();
-        JSONArray questions = object.getJSONArray(JSON_PROPERTY_QUESTIONS);
+        if (!map.containsKey(JSON_PROPERTY_QUESTIONS)) {
+            throw new JSONException("questions field missing");
+        }
+        JSONArray questions = (JSONArray) map.get(JSON_PROPERTY_QUESTIONS);
         for (int i = 0; i < questions.length(); i++) {
             this.questions.add(Question.of((JSONObject) questions.get(i)));
         }
-        if (object.has(JSON_PROPERTY_TIMELIMIT)) {
-            this.timeLimit = object.getInt(JSON_PROPERTY_TIMELIMIT);
+        if (map.containsKey(JSON_PROPERTY_TIMELIMIT)) {
+            this.timeLimit = (Integer) map.get(JSON_PROPERTY_TIMELIMIT);
         }
-        if (object.has(JSON_PROPERTY_DESCRIPTION)) {
-            this.description = object.getString(JSON_PROPERTY_DESCRIPTION);
+        if (map.containsKey(JSON_PROPERTY_DESCRIPTION)) {
+            this.description = (String) map.get(JSON_PROPERTY_DESCRIPTION);
         }
     }
 
