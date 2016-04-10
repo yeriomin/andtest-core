@@ -79,9 +79,9 @@ public class Test implements Jsonable {
         if (!map.containsKey(JSON_PROPERTY_QUESTIONS)) {
             throw new JSONException("questions field missing");
         }
-        JSONArray questions = (JSONArray) map.get(JSON_PROPERTY_QUESTIONS);
-        for (int i = 0; i < questions.length(); i++) {
-            this.questions.add(Question.of((JSONObject) questions.get(i)));
+        Iterable questions = (Iterable) map.get(JSON_PROPERTY_QUESTIONS);
+        while (questions.iterator().hasNext()) {
+            this.questions.add(Question.of(new JSONObject(questions.iterator().next())));
         }
         if (map.containsKey(JSON_PROPERTY_TIMELIMIT)) {
             this.timeLimit = (Integer) map.get(JSON_PROPERTY_TIMELIMIT);
