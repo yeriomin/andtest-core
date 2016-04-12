@@ -3,7 +3,6 @@ package com.github.yeriomin.andtest.core;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
 
 abstract public class Question implements Jsonable {
@@ -34,18 +33,18 @@ abstract public class Question implements Jsonable {
         this.explanation = (String) map.get(JSON_PROPERTY_EXPLANATION);
     }
 
-    public static Question of(JSONObject jsonQuestion) throws JSONException {
-        final String type = jsonQuestion.getString(JSON_PROPERTY_TYPE);
-        HashMap<String, Object> map = new HashMap<>();
-        for (String key: jsonQuestion.keySet()) {
-            map.put(key, jsonQuestion.get(key));
-        }
-        if (type.equals(TYPE_MC)) {
-            return new QuestionMultipleChoice(map);
-        } else if (type.equals(TYPE_OE)) {
-            return new QuestionOpenEnded(map);
-        } else {
-            throw new JSONException("Unknown type: " + type);
+    public static Question of(Map map) throws JSONException {
+        try {
+            final String type = (String) map.get(JSON_PROPERTY_TYPE);
+            if (type.equals(TYPE_MC)) {
+                return new QuestionMultipleChoice(map);
+            } else if (type.equals(TYPE_OE)) {
+                return new QuestionOpenEnded(map);
+            } else {
+                throw new JSONException("Unknown type: " + type);
+            }
+        } catch (ClassCastException e) {
+            throw new JSONException("type is expected to be a String", e);
         }
     }
 

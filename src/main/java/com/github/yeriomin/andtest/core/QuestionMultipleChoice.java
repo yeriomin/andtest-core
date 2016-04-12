@@ -55,18 +55,26 @@ public class QuestionMultipleChoice extends Question {
         if (!map.containsKey(JSON_PROPERTY_CHOICES)) {
             throw new JSONException("choices field missing");
         }
-        Iterable choices = (Iterable) map.get(JSON_PROPERTY_CHOICES);
-        this.choices = new ArrayList<>();
-        for (Object item: choices) {
-            this.choices.add((String) item);
+        try {
+            Iterable<String> choices = (Iterable) map.get(JSON_PROPERTY_CHOICES);
+            this.choices = new ArrayList<>();
+            for (String item: choices) {
+                this.choices.add(item);
+            }
+        } catch (ClassCastException e) {
+            throw new JSONException("choices is expected to be an Iterable<String>", e);
         }
         if (!map.containsKey(JSON_PROPERTY_CORRECT)) {
             throw new JSONException("correct field missing");
         }
-        Iterable correct = (Iterable) map.get(JSON_PROPERTY_CORRECT);
-        this.correct = new HashSet<>();
-        for (Object item: correct) {
-            this.correct.add((Integer) item);
+        try {
+            Iterable<Integer> correct = (Iterable) map.get(JSON_PROPERTY_CORRECT);
+            this.correct = new HashSet<>();
+            for (Integer item: correct) {
+                this.correct.add(item);
+            }
+        } catch (ClassCastException e) {
+            throw new JSONException("correct is expected to be an Iterable<Integer>", e);
         }
     }
 
