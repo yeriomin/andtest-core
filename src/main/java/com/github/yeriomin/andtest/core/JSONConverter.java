@@ -3,17 +3,18 @@ package com.github.yeriomin.andtest.core;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Why isn't JSONObject a map?
  */
 public class JSONConverter {
 
-    public static HashMap toMap(JSONObject object) {
+    public static Map toMap(JSONObject object) {
         HashMap<String, Object> map = new HashMap<>();
-        for (String key: object.keySet()) {
+        Iterator<String> keys = object.keys();
+        while (keys.hasNext()) {
+            String key = keys.next();
             Object subObject = object.get(key);
             if (subObject instanceof JSONObject) {
                 map.put(key, toMap((JSONObject) subObject));
@@ -26,9 +27,11 @@ public class JSONConverter {
         return map;
     }
 
-    public static ArrayList toList(JSONArray array) {
+    public static List toList(JSONArray array) {
         ArrayList arrayList = new ArrayList();
-        for (Object object: array) {
+        int size = array.length();
+        for (int i = 0; i < size; i++) {
+            Object object = array.get(i);
             if (object instanceof JSONObject) {
                 arrayList.add(toMap((JSONObject) object));
             } else if (object instanceof JSONArray) {
