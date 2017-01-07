@@ -18,10 +18,6 @@ abstract public class Question implements Jsonable {
     private String question;
     private String explanation;
 
-    public Question() {
-
-    }
-
     public Question(Map map) throws JSONException {
         if (!map.containsKey(JSON_PROPERTY_QUESTION)) {
             throw new JSONException("question field missing");
@@ -80,6 +76,5 @@ abstract public class Question implements Jsonable {
         return object;
     }
 
-    abstract public boolean isCorrect();
-    abstract public boolean hasAnswer();
+    abstract public boolean isCorrect(Answer answer);
 }

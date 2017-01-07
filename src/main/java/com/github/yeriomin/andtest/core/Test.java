@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Test implements Jsonable {
@@ -17,7 +18,7 @@ public class Test implements Jsonable {
     private String id = "";
     private String description = "";
     private long timeLimit;
-    private ArrayList<Question> questions;
+    private List<Question> questions = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -47,30 +48,15 @@ public class Test implements Jsonable {
         return description;
     }
 
-    public ArrayList<Question> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
     }
 
-    public int getCorrectCount() {
-        int count = 0;
-        for (Question question: this.questions) {
-            if (question.isCorrect()) {
-                count++;
-            }
-        }
-        return count;
-    }
-
     public Test() {
-        super();
 
-        this.questions = new ArrayList<>();
     }
 
     public Test(Map map) throws JSONException {
-        this();
-
-        this.questions = new ArrayList<>();
         if (!map.containsKey(JSON_PROPERTY_QUESTIONS)) {
             throw new JSONException("questions field missing");
         }

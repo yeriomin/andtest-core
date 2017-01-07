@@ -58,7 +58,7 @@ public class QuestionMultipleChoiceTest extends TestCase {
     public void testQuestionMultipleChoiceToJson()
     {
         try {
-            com.github.yeriomin.andtest.core.QuestionMultipleChoice question = new com.github.yeriomin.andtest.core.QuestionMultipleChoice();
+            com.github.yeriomin.andtest.core.QuestionMultipleChoice question = new com.github.yeriomin.andtest.core.QuestionMultipleChoice(this.question);
             ArrayList<String> choices = new ArrayList<>();
             choices.add("Jack");
             choices.add("Jill");
@@ -85,7 +85,7 @@ public class QuestionMultipleChoiceTest extends TestCase {
     public void testQuestionMultipleChoiceCorrectness()
     {
         try {
-            com.github.yeriomin.andtest.core.QuestionMultipleChoice question = new com.github.yeriomin.andtest.core.QuestionMultipleChoice();
+            com.github.yeriomin.andtest.core.QuestionMultipleChoice question = new com.github.yeriomin.andtest.core.QuestionMultipleChoice(this.question);
             ArrayList<String> choices = new ArrayList<>();
             choices.add("Jack");
             choices.add("Jill");
@@ -94,22 +94,11 @@ public class QuestionMultipleChoiceTest extends TestCase {
             correct.add(0);
             question.setCorrect(correct);
 
-            assertFalse(question.hasAnswer());
-            assertFalse(question.isCorrect());
-            HashSet<Integer> answer = new HashSet<>();
-            answer.add(0);
-            question.setAnswer(answer);
-            assertTrue(question.hasAnswer());
-            assertTrue(question.isCorrect());
-            answer.add(1);
-            assertTrue(question.hasAnswer());
-            assertFalse(question.isCorrect());
-            answer.clear();
-            assertFalse(question.hasAnswer());
-            assertFalse(question.isCorrect());
-            answer.add(1);
-            assertTrue(question.hasAnswer());
-            assertFalse(question.isCorrect());
+            assertFalse(question.isCorrect(new AnswerMultipleChoice()));
+            assertTrue(question.isCorrect(new AnswerMultipleChoice(correct)));
+            HashSet<Integer> incorrect = new HashSet<>();
+            incorrect.add(1);
+            assertFalse(question.isCorrect(new AnswerMultipleChoice(incorrect)));
         } catch (JSONException e) {
             // no need
         }

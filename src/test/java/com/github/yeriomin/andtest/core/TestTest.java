@@ -3,10 +3,12 @@ package com.github.yeriomin.andtest.core;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TestTest extends TestCase {
 
@@ -27,7 +29,6 @@ public class TestTest extends TestCase {
     {
         com.github.yeriomin.andtest.core.Test test = new com.github.yeriomin.andtest.core.Test(new JSONObject(JSON_MINIMAL));
         assertEquals(0, test.getQuestions().size());
-        assertEquals(0, test.getCorrectCount());
         assertEquals(0, test.getTimeLimit());
         assertEquals("", test.getDescription());
     }
@@ -36,7 +37,6 @@ public class TestTest extends TestCase {
     {
         com.github.yeriomin.andtest.core.Test test = new com.github.yeriomin.andtest.core.Test(new JSONObject(JSON_WITH_PROPERTIES));
         assertEquals(1, test.getQuestions().size());
-        assertEquals(0, test.getCorrectCount());
         assertEquals(600, test.getTimeLimit());
         assertEquals("test test", test.getDescription());
     }
@@ -47,7 +47,18 @@ public class TestTest extends TestCase {
         test.setDescription("test test");
         test.setTimeLimit(600);
         ArrayList<Question> questions = new ArrayList<>();
-        questions.add(new QuestionMultipleChoice());
+        HashMap<String, Object> question = new HashMap<>();
+        question.put("question", "What is my name?");
+        question.put("type", "multipleChoice");
+        JSONArray choices = new JSONArray();
+        choices.put("Jack");
+        choices.put("Jill");
+        question.put("choices", choices);
+        JSONArray correct = new JSONArray();
+        correct.put(0);
+        question.put("correct", correct);
+        question.put("explanation", "My mum named me like that.");
+        questions.add(new QuestionMultipleChoice(question));
         test.setQuestions(questions);
 
         JSONObject object = test.toJSONObject();

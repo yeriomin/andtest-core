@@ -46,7 +46,7 @@ public class QuestionTest extends TestCase {
     public void testQuestionToJson()
     {
         try {
-            com.github.yeriomin.andtest.core.QuestionOpenEnded question = new com.github.yeriomin.andtest.core.QuestionOpenEnded();
+            com.github.yeriomin.andtest.core.QuestionOpenEnded question = new com.github.yeriomin.andtest.core.QuestionOpenEnded(this.question);
             question.setQuestion("What is my name?");
             question.setExplanation("My mum named me like that.");
 

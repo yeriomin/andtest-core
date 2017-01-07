@@ -45,7 +45,7 @@ public class QuestionOpenEndedTest extends TestCase {
     public void testQuestionOpenEndedToJson()
     {
         try {
-            com.github.yeriomin.andtest.core.QuestionOpenEnded question = new com.github.yeriomin.andtest.core.QuestionOpenEnded();
+            com.github.yeriomin.andtest.core.QuestionOpenEnded question = new com.github.yeriomin.andtest.core.QuestionOpenEnded(this.question);
             question.setCorrect("Jack");
 
             JSONObject object = question.toJSONObject();
@@ -60,17 +60,12 @@ public class QuestionOpenEndedTest extends TestCase {
     public void testQuestionOpenEndedCorrectness()
     {
         try {
-            com.github.yeriomin.andtest.core.QuestionOpenEnded question = new com.github.yeriomin.andtest.core.QuestionOpenEnded();
+            com.github.yeriomin.andtest.core.QuestionOpenEnded question = new com.github.yeriomin.andtest.core.QuestionOpenEnded(this.question);
             question.setCorrect("Jack");
 
-            assertFalse(question.hasAnswer());
-            assertFalse(question.isCorrect());
-            question.setAnswer("Jack");
-            assertTrue(question.hasAnswer());
-            assertTrue(question.isCorrect());
-            question.setAnswer("Jill");
-            assertTrue(question.hasAnswer());
-            assertFalse(question.isCorrect());
+            assertFalse(question.isCorrect(new AnswerOpenEnded()));
+            assertFalse(question.isCorrect(new AnswerOpenEnded("Incorrect")));
+            assertTrue(question.isCorrect(new AnswerOpenEnded("Jack")));
         } catch (JSONException e) {
             // no need
         }

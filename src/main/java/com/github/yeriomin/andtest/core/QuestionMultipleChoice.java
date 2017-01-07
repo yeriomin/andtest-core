@@ -14,7 +14,10 @@ public class QuestionMultipleChoice extends Question {
 
     private ArrayList<String> choices;
     private HashSet<Integer> correct;
-    private HashSet<Integer> answer;
+
+    {
+        this.type = Question.TYPE_MC;
+    }
 
     public ArrayList<String> getChoices() {
         return choices;
@@ -22,10 +25,6 @@ public class QuestionMultipleChoice extends Question {
 
     public HashSet<Integer> getCorrect() {
         return correct;
-    }
-
-    public HashSet<Integer> getAnswer() {
-        return answer;
     }
 
     public void setChoices(ArrayList<String> choices) {
@@ -36,21 +35,9 @@ public class QuestionMultipleChoice extends Question {
         this.correct = correct;
     }
 
-    public void setAnswer(HashSet<Integer> answer) {
-        this.answer = answer;
-    }
-
-    public QuestionMultipleChoice() {
-        super();
-
-        this.setAnswer(new HashSet<Integer>());
-        this.type = Question.TYPE_MC;
-    }
-
     public QuestionMultipleChoice(Map map) throws JSONException {
         super(map);
 
-        this.setAnswer(new HashSet<Integer>());
         this.type = Question.TYPE_MC;
         if (!map.containsKey(JSON_PROPERTY_CHOICES)) {
             throw new JSONException("choices field missing");
@@ -85,12 +72,8 @@ public class QuestionMultipleChoice extends Question {
         return object;
     }
 
-    public boolean isCorrect() {
-        return this.correct.equals(this.getAnswer());
-    }
-
-    public boolean hasAnswer() {
-        return null != this.getAnswer() && this.getAnswer().size() > 0;
+    public boolean isCorrect(Answer answer) {
+        return answer instanceof AnswerMultipleChoice && this.correct.equals(((AnswerMultipleChoice) answer).get());
     }
 
 }
