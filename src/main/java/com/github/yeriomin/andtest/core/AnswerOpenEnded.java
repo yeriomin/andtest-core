@@ -6,6 +6,10 @@ public class AnswerOpenEnded extends Answer {
 
     protected String answer = "";
 
+    {
+        type = Question.TYPE_OE;
+    }
+
     public AnswerOpenEnded() {
     }
 

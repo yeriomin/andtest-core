@@ -10,6 +10,10 @@ public class AnswerMultipleChoice extends Answer {
 
     protected Set<Integer> answer = new HashSet<>();
 
+    {
+        type = Question.TYPE_MC;
+    }
+
     public AnswerMultipleChoice() {
     }
 
