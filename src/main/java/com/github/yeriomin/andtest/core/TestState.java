@@ -59,7 +59,7 @@ public class TestState {
     }
 
     public boolean isAnswered(int questionNum) {
-        return this.answers.containsKey(questionNum);
+        return this.answers.containsKey(questionNum) && !this.answers.get(questionNum).isEmpty();
     }
 
     public int getCorrectAnswerCount(Test test) {

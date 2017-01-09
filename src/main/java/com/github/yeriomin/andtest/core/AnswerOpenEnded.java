@@ -26,17 +26,24 @@ public class AnswerOpenEnded extends Answer {
         this.answer = answer;
     }
 
+    @Override
     public JSONObject toJSONObject() {
         JSONObject object = new JSONObject();
         object.put(JSON_PROPERTY_VALUE, get());
         return object;
     }
 
+    @Override
     public void fill(String jsonString) throws JSONException {
         JSONObject object = new JSONObject(jsonString);
         if (!object.has(JSON_PROPERTY_VALUE)) {
             throw new JSONException("No answer container in JSON");
         }
         set(object.getString(JSON_PROPERTY_VALUE));
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return null == this.answer || this.answer.isEmpty();
     }
 }

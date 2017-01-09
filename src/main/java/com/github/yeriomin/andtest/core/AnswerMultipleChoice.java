@@ -30,12 +30,14 @@ public class AnswerMultipleChoice extends Answer {
         this.answer = answer;
     }
 
+    @Override
     public JSONObject toJSONObject() {
         JSONObject object = new JSONObject();
         object.put(JSON_PROPERTY_VALUE, new JSONArray(get()));
         return object;
     }
 
+    @Override
     public void fill(String jsonString) throws JSONException {
         JSONObject object = new JSONObject(jsonString);
         if (!object.has(JSON_PROPERTY_VALUE)) {
@@ -48,4 +50,8 @@ public class AnswerMultipleChoice extends Answer {
         set(set);
     }
 
+    @Override
+    public boolean isEmpty() {
+        return null == this.answer || this.answer.isEmpty();
+    }
 }
