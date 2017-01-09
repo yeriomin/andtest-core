@@ -6,6 +6,8 @@ abstract public class Answer implements Jsonable {
 
     protected String type;
 
+    abstract public void fill(String jsonString);
+
     public static Answer of(String type) throws Exception {
         if (type.equals(Question.TYPE_MC)) {
             return new AnswerMultipleChoice();

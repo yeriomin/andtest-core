@@ -1,6 +1,7 @@
 package com.github.yeriomin.andtest.core;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashSet;
@@ -33,6 +34,18 @@ public class AnswerMultipleChoice extends Answer {
         JSONObject object = new JSONObject();
         object.put(JSON_PROPERTY_VALUE, new JSONArray(get()));
         return object;
+    }
+
+    public void fill(String jsonString) throws JSONException {
+        JSONObject object = new JSONObject(jsonString);
+        if (!object.has(JSON_PROPERTY_VALUE)) {
+            throw new JSONException("No answer container in JSON");
+        }
+        Set<Integer> set = new HashSet<>();
+        for (Object answer: object.getJSONArray(JSON_PROPERTY_VALUE)) {
+            set.add((Integer) answer);
+        }
+        set(set);
     }
 
 }
