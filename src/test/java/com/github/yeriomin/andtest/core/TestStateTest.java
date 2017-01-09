@@ -56,4 +56,29 @@ public class TestStateTest {
         Assert.assertEquals(1, state.getCorrectAnswerCount(test));
     }
 
+    @Test
+    public void isAnswered() {
+        TestState state = new TestState();
+        Assert.assertFalse(state.isAnswered(5));
+        state.setAnswer(5, new AnswerOpenEnded());
+        Assert.assertFalse(state.isAnswered(5));
+        Assert.assertTrue(state.getAnswers().containsKey(5));
+        state.setAnswer(5, new AnswerOpenEnded("aaa"));
+        Assert.assertTrue(state.isAnswered(5));
+        Assert.assertEquals("aaa", ((AnswerOpenEnded) state.getAnswer(5)).get());
+    }
+
+    @Test
+    public void getAnswer() {
+        TestState state = new TestState();
+        Assert.assertFalse(state.isAnswered(5));
+        Assert.assertNull(state.getAnswer(5));
+        state.setAnswer(5, new AnswerOpenEnded());
+        Assert.assertFalse(state.isAnswered(5));
+        Assert.assertFalse(null == state.getAnswer(5));
+        state.setAnswer(5, new AnswerOpenEnded("bbb"));
+        Assert.assertTrue(state.isAnswered(5));
+        Assert.assertEquals("bbb", ((AnswerOpenEnded) state.getAnswer(5)).get());
+    }
+
 }

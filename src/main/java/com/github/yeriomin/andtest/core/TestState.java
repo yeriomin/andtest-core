@@ -51,7 +51,7 @@ public class TestState {
     }
 
     public Answer getAnswer(int questionNum) {
-        return isAnswered(questionNum) ? this.answers.get(questionNum) : null;
+        return this.answers.containsKey(questionNum) ? this.answers.get(questionNum) : null;
     }
 
     public void setAnswer(int questionNum, Answer answer) {
