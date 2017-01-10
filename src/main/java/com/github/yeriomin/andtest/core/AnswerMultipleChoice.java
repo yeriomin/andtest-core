@@ -44,7 +44,7 @@ public class AnswerMultipleChoice extends Answer {
             throw new JSONException("No answer container in JSON");
         }
         Set<Integer> set = new HashSet<>();
-        for (Object answer: object.getJSONArray(JSON_PROPERTY_VALUE)) {
+        for (Object answer: JSONConverter.toList(object.getJSONArray(JSON_PROPERTY_VALUE))) {
             set.add((Integer) answer);
         }
         set(set);
